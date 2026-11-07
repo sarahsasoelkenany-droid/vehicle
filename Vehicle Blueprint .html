@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>النظام الشامل لتتبع قطع غيار وصيانة السيارات</title>
+    <!-- ربط ملف الـ CSS -->
+    <link rel="stylesheet" href="Vehicle Blueprint .css">
+</head>
+<body>
+
+    <!-- الهيدر أو القائمة العلوية -->
+    <header class="main-header">
+        <div class="container">
+            <h1>نظام تتبع قطع غيار وصيانة السيارات</h1>
+            <nav>
+                <ul>
+                    <li><a href="#owner-section">بيانات المالك</a></li>
+                    <li><a href="#tracker-section">حاسبة الصيانة والتواريخ</a></li>
+                    <li><a href="#parts">قطع الغيار</a></li>
+                    <li><a href="#schedule">جدول الصيانة</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- المحتوى الرئيسي -->
+    <main class="container">
+        
+        <!-- قسم تسجيل بيانات المستخدم -->
+        <section id="owner-section" class="owner-section">
+            <h3>تسجيل بيانات المالك والمركبة</h3>
+            <form id="ownerForm" class="owner-form">
+                <div class="form-group">
+                    <label for="ownerName">اسم المالك:</label>
+                    <input type="text" id="ownerName" placeholder="أدخل اسمك هنا" required>
+                </div>
+                <div class="form-group">
+                    <label for="ownerAge">السن:</label>
+                    <input type="number" id="ownerAge" placeholder="أدخل عمرك" required>
+                </div>
+                <div class="form-group">
+                    <label for="vehicleType">نوع المركبة:</label>
+                    <input type="text" id="vehicleType" placeholder="مثال: سيارة ركوب خفيفة" required>
+                </div>
+                <div class="form-group">
+                    <label for="carModel">نوع السيارة:</label>
+                    <input type="text" id="carModel" placeholder="مثال: سيدان / دفع رباعي" required>
+                </div>
+                <div class="form-group">
+                    <label for="carColor">لون السيارة:</label>
+                    <input type="text" id="carColor" placeholder="أدخل لون السيارة" required>
+                </div>
+                <div class="form-group">
+                    <label for="carPlate">رقم اللوحة (النمرة):</label>
+                    <input type="text" id="carPlate" placeholder="مثال: أ ب ج 1234" required>
+                </div>
+                <button type="submit" class="btn-submit">عرض بياناتي في الجدول</button>
+            </form>
+
+            <!-- جدول بيانات المالك (يظهر بعد التسجيل) -->
+            <div id="resultContainer" style="display: none; margin-top: 25px;">
+                <h4>بيانات المالك والمركبة الحالية:</h4>
+                <table class="owner-table">
+                    <tr>
+                        <th>اسم المالك</th>
+                        <td id="resName"></td>
+                    </tr>
+                    <tr>
+                        <th>السن</th>
+                        <td id="resAge"></td>
+                    </tr>
+                    <tr>
+                        <th>نوع المركبة</th>
+                        <td id="resVehicle"></td>
+                    </tr>
+                    <tr>
+                        <th>نوع السيارة</th>
+                        <td id="resModel"></td>
+                    </tr>
+                    <tr>
+                        <th>لون السيارة</th>
+                        <td id="resColor"></td>
+                    </tr>
+                    <tr>
+                        <th>رقم اللوحة (النمرة)</th>
+                        <td id="resPlate"></td>
+                    </tr>
+                </table>
+            </div>
+        </section>
+
+        <!-- حاسبة تاريخ الإنهاء التلقائي لقطع الغيار -->
+        <section id="tracker-section" class="owner-section">
+            <h3>حاسبة تواريخ إنتاج وتركيب قطع الغيار (الحساب التلقائي)</h3>
+            <p style="margin-bottom: 15px; color: #475569; font-size: 0.95rem;">اختر قطعة الغيار وتاريخ التركيب، وسيقوم البرنامج بحساب موعد الانتهاء أو الفحص تلقائياً:</p>
+            
+            <form id="partTrackerForm" class="owner-form">
+                <div class="form-group">
+                    <label for="selectPart">اختر قطعة الغيار:</label>
+                    <select id="selectPart" style="padding: 12px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 1rem; background-color: #f8fafc;" required>
+                        <option value="" disabled selected>-- اختر القطعة --</option>
+                        <option value="engine_oil">زيت المحرك (صلاحية 6 أشهر)</option>
+                        <option value="brake_pads">تيل الفرامل (صلاحية سنة)</option>
+                        <option value="timing_belt">سير التايمنج (صلاحية سنتين)</option>
+                        <option value="battery">بطارية السيارة (صلاحية سنة ونصف)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="installDate">تاريخ التركيب:</label>
+                    <input type="date" id="installDate" required>
+                </div>
+                <button type="submit" class="btn-submit">احسب تاريخ انتهاء الصلاحية</button>
+            </form>
+
+            <div id="trackerResult" style="display: none; margin-top: 20px; background: #e0f2fe; padding: 15px; border-radius: 8px; border-right: 5px solid #0284c7;">
+                <h4 style="color: #0369a1; margin-bottom: 5px;">نتيجة الحساب التلقائي:</h4>
+                <p id="calcOutput" style="font-weight: bold; color: #1e3a8a; font-size: 1.1rem;"></p>
+            </div>
+        </section>
+
+        <!-- زر التنبيهات الذكية -->
+        <section class="notification-bar">
+            <button id="notifyBtn" class="btn-notify">إظهار تنبيهات الصيانة الذكية</button>
+            <div id="notificationArea" class="notification-msg"></div>
+        </section>
+
+        <!-- الترحيب -->
+        <section class="hero-section">
+            <h2>دليلك الشامل لجميع قطع غيار السيارات (من الصفر للكاملة)</h2>
+            <p>تتبع قطع غيار سيارتك بدءاً من الشاسيه والهيكل وحتى اكتمال السيارة بالكامل بدقة واحترافية.</p>
+        </section>
+
+        <!-- أقسام قطع الغيار من الصفر للكاملة -->
+        <section id="parts" class="parts-section">
+            <h3>أقسام قطع الغيار الشاملة (من الصفر للسيارة الكاملة)</h3>
+            <div class="parts-grid">
+                
+                <div class="part-card">
+                    <h4>1. الهيكل الأساسي والشاسيه</h4>
+                    <ul>
+                        <li>الشاسيه (Chassis) والهيكل المعدني</li>
+                        <li>جسم السيارة (الأبواب، السقف، الكبوت، الشنطة)</li>
+                        <li>الرفارف الأمامية والخلفية والعتبات</li>
+                        <li>الزجاج الأمامي، الخلفي، وزجاج الأبواب</li>
+                        <li>الصدامات الأمامية والخلفية</li>
+                    </ul>
+                </div>
+
+                <div class="part-card">
+                    <h4>2. وحدة القوة والدفع (المحرك والفتيس)</h4>
+                    <ul>
+                        <li>بلوك المحرك، السلندرات، البساتم، والكرنك</li>
+                        <li>صمامات الوقود والهواء وجوان وش السلندر</li>
+                        <li>الدينامو، المارش، وطلمبات الماء والزيت</li>
+                        <li>ناقل الحركة (الفتيس) وأسطوانة الدبرياج والديسك</li>
+                        <li>عمود الكردان والفتيس الخلفي (الدفرنس)</li>
+                    </ul>
+                </div>
+
+                <div class="part-card">
+                    <h4>3. أنظمة التعليق، التوجيه، والفرامل</h4>
+                    <ul>
+                        <li>المساعدين، اليايات (السوست)، والمقصات</li>
+                        <li>علبة الدريكسيون والأذرع والبارات</li>
+                        <li>تيل الفرامل، الطنابير، وسيرفو الفرامل</li>
+                        <li>الجنوط (الإطارات المعدنية) والإطارات</li>
+                    </ul>
+                </div>
+
+                <div class="part-card">
+                    <h4>4. النظام الكهربائي والإلكتروني</h4>
+                    <ul>
+                        <li>البطارية وضفيرة الكهرباء الرئيسية</li>
+                        <li>وحدة التحكم الإلكتروني (كمبيوتر السيارة ECU)</li>
+                        <li>المصابيح الأمامية والخلفية وإشارات التوجيه</li>
+                        <li>موتور المساحات ووسائد الهواء (Airbags)</li>
+                        <li>أنظمة التكييف والحساسات المختلفة</li>
+                    </ul>
+                </div>
+
+                <div class="part-card">
+                    <h4>5. السوائل ونظام التبريد</h4>
+                    <ul>
+                        <li>رادياتير المياه ومروحة التبريد</li>
+                        <li>بلف الحرارة وقربة التبريد</li>
+                        <li>زيوت المحرك، الفتيس، والباور</li>
+                        <li>سائل الفرامل وسائل مساحات الزجاج</li>
+                    </ul>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- جدول تتبع الصيانة الدورية -->
+        <section id="schedule" class="schedule-section">
+            <h3>جدول متابعة وفحص قطع الغيار</h3>
+            <table class="parts-table">
+                <thead>
+                    <tr>
+                        <th>قطعة الغيار</th>
+                        <th>ميعاد الفحص أو الاستبدال</th>
+                        <th>الحالة العامة</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>زيت المحرك والفلتر</td>
+                        <td>كل 5,000 إلى 10,000 كم</td>
+                        <td><span class="status good">ممتاز</span></td>
+                    </tr>
+                    <tr>
+                        <td>تيل الفرامل (الأمامي والخلفي)</td>
+                        <td>كل 20,000 إلى 30,000 كم</td>
+                        <td><span class="status warning">يحتاج فحص قريب</span></td>
+                    </tr>
+                    <tr>
+                        <td>سير التايمنج (الجنزير/السير)</td>
+                        <td>كل 50,000 إلى 60,000 كم</td>
+                        <td><span class="status good">سليم</span></td>
+                    </tr>
+                    <tr>
+                        <td>المساعدين ونظام التعليق</td>
+                        <td>كل 80,000 كم</td>
+                        <td><span class="status good">سليم</span></td>
+                    </tr>
+                    <tr>
+                        <td>البطارية والدينامو</td>
+                        <td>فحص دوري كل 6 أشهر</td>
+                        <td><span class="status warning">مراجعة الشحن</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+    </main>
+
+    <!-- التذييل -->
+    <footer class="main-footer">
+        <p>جميع الحقوق محفوظة - نظام تتبع الصيانة الشامل 2026</p>
+    </footer>
+
+    <!-- ربط ملف الجافا سكريبت -->
+    <script src="Vehicle Blueprint .js"></script>
+</body>
+</html>
